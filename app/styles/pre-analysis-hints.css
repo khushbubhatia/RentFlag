@@ -1,0 +1,25 @@
+@layer components {
+  .pre-analysis {
+    @apply text-ink-muted;
+  }
+
+  .pre-analysis__inner {
+    @apply max-w-lg;
+  }
+
+  .pre-analysis__lead {
+    @apply font-display text-2xl font-normal tracking-tight text-night sm:text-3xl;
+  }
+
+  .pre-analysis__items {
+    @apply mt-3 text-base leading-relaxed text-ink-muted sm:mt-4 sm:text-lg;
+  }
+
+  .pre-analysis__sep {
+    @apply text-ink-subtle;
+  }
+
+  .pre-analysis__kw {
+    @apply font-semibold text-night;
+  }
+}

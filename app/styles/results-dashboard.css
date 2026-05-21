@@ -1,0 +1,547 @@
+@layer components {
+.results {
+  @apply space-y-6 sm:space-y-8;
+}
+
+.results__topbar {
+  @apply flex flex-col gap-4 border-b border-sand-deep pb-8 sm:flex-row sm:items-center sm:justify-between;
+}
+
+.results__reset {
+  @apply w-fit text-sm font-bold text-flag underline decoration-flag/30 decoration-2 underline-offset-4 transition hover:text-flag-hover hover:decoration-flag/50;
+}
+
+.results-read {
+  @apply rounded-3xl border border-sand-deep/80 bg-white p-6 shadow-card sm:p-9;
+}
+
+.results-read--positive {
+  @apply border-emerald-200/90 bg-emerald-50/80;
+}
+
+.results-read--caution {
+  @apply border-amber-200/90 bg-amber-50/80;
+}
+
+.results-read--verify {
+  @apply border-flag/25 bg-flag-muted/45;
+}
+
+.results-read__row {
+  @apply flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between;
+}
+
+.results-read__main {
+  @apply min-w-0 flex-1;
+}
+
+.results-read__eyebrow {
+  @apply font-sans text-xs font-bold uppercase tracking-[0.14em] text-flag;
+}
+
+.results-read__title {
+  @apply font-display mt-3 text-3xl font-normal tracking-tight text-night sm:text-4xl;
+}
+
+.results-read__desc {
+  @apply mt-3 max-w-2xl text-base leading-relaxed text-ink-muted;
+}
+
+.results-read__title--compact {
+  @apply mt-2 text-2xl sm:text-3xl;
+}
+
+.results-read__desc--compact {
+  @apply mt-4 text-sm sm:text-base;
+}
+
+.results-read__notes--tight {
+  @apply mt-4;
+}
+
+.results-glance {
+  @apply space-y-4;
+}
+
+.results-glance__chips {
+  @apply flex flex-wrap gap-2;
+}
+
+.results-glance__chip {
+  @apply rounded-full border border-sand-deep/90 bg-white px-3 py-1 text-xs font-semibold text-night;
+}
+
+.results-glance__scores {
+  @apply flex flex-wrap gap-3 pt-1;
+}
+
+.results-glance__summary {
+  @apply space-y-2 text-sm leading-snug text-night sm:text-base;
+}
+
+.results-glance__actions {
+  @apply flex flex-col gap-2 pt-2 sm:flex-row sm:flex-wrap;
+}
+
+.results-score-pill {
+  @apply flex min-w-[5.5rem] flex-col rounded-2xl border border-sand-deep/80 bg-sand px-3 py-2 text-center;
+}
+
+.results-score-pill__value {
+  @apply font-display text-xl font-semibold tabular-nums text-night;
+}
+
+.results-score-pill__label {
+  @apply text-[0.65rem] font-bold uppercase leading-tight tracking-wide text-ink-muted;
+}
+
+.results-disclosure {
+  @apply mt-5 rounded-2xl border border-sand-deep/70 bg-sand/50;
+}
+
+.results-disclosure--tight {
+  @apply mt-3 border-sand-deep/50 bg-transparent;
+}
+
+.results-disclosure--section {
+  @apply overflow-hidden border-sand-deep/80 bg-white;
+}
+
+.results-disclosure--nested {
+  @apply mt-3 border-0 bg-sand/60;
+}
+
+.results-disclosure__summary {
+  @apply cursor-pointer list-none px-4 py-3.5 font-sans text-sm font-bold text-night outline-none marker:content-none [&::-webkit-details-marker]:hidden sm:px-6 sm:py-4;
+}
+
+.results-disclosure__summary:hover {
+  @apply text-flag;
+}
+
+.results-disclosure__body {
+  @apply space-y-4 border-t border-sand-deep/60 px-4 pb-4 pt-3 text-sm text-ink-muted;
+}
+
+.results-disclosure__body--columns {
+  @apply grid gap-4 sm:grid-cols-3 sm:gap-5;
+}
+
+.results-disclosure__lede {
+  @apply text-base font-medium text-night;
+}
+
+.results-disclosure__hint {
+  @apply text-xs text-ink-subtle;
+}
+
+.results-score-caption-h {
+  @apply font-sans text-xs font-bold uppercase tracking-wide text-flag;
+}
+
+.results-score-caption-b {
+  @apply mt-1 text-sm leading-relaxed text-ink-muted;
+}
+
+.results-show-more {
+  @apply mt-3 w-full rounded-full border border-sand-deep bg-white py-2.5 text-sm font-bold text-night transition hover:border-flag/40 hover:bg-sand sm:w-auto sm:px-6;
+}
+
+.results-concerns--compact {
+  @apply space-y-3;
+}
+
+.results-concerns--compact .results-concerns__title {
+  @apply text-xl sm:text-2xl;
+}
+
+.results-concern__explain--clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.results-questions--compact .results-questions__title {
+  @apply text-xl sm:text-2xl;
+}
+
+.results-questions--compact .results-questions__sub {
+  @apply text-sm;
+}
+
+.results-questions__list--continued {
+  @apply mt-3 border-t border-sand-deep/50 pt-3;
+}
+
+.results-ai-matches--compact {
+  @apply py-6 sm:py-7;
+}
+
+.results-ai-matches--compact .results-ai-matches__title {
+  @apply text-2xl;
+}
+
+.results-ai-matches--compact .results-ai-matches__sub {
+  @apply text-sm;
+}
+
+.results-ai-matches__why--clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Panel inside <details>: avoids fighting .results-facts (card) base styles */
+.results-facts-panel {
+  @apply box-border border-t border-sand-deep/60 bg-sand/30 px-5 pb-7 pt-6 sm:px-8 sm:pb-8 sm:pt-7;
+}
+
+.results-facts-panel .results-facts__rows--panel {
+  @apply px-0 py-1;
+}
+
+/* Beats lone .results-facts__inferred (comes later in file) */
+.results-facts-panel .results-facts__inferred {
+  @apply mt-6 rounded-xl border border-dashed border-flag/30 bg-flag-muted/35 px-4 py-4 sm:px-5 sm:py-5;
+}
+
+.results-missing__list.results-missing__list--in-details {
+  @apply box-border mt-0 border-t border-sand-deep/60 bg-sand/30 px-5 py-6 sm:px-8 sm:py-7;
+}
+
+.results-read__summary {
+  @apply mt-5 space-y-2.5 text-base text-night;
+}
+
+.results-glance .results-read__summary {
+  @apply mt-0 space-y-2;
+}
+
+.results-read__summary-item {
+  @apply flex gap-2;
+}
+
+.results-read__bullet {
+  @apply font-bold text-flag;
+}
+
+.results-read__actions {
+  @apply flex flex-shrink-0 flex-wrap gap-3;
+}
+
+.results-read__btn-primary {
+  @apply rounded-full bg-flag px-5 py-2.5 text-sm font-bold text-white shadow-flag transition hover:bg-flag-hover;
+}
+
+.results-read__btn-secondary {
+  @apply rounded-full border border-sand-deep bg-white px-5 py-2.5 text-sm font-bold text-night transition hover:border-flag/40 hover:bg-sand;
+}
+
+.results-read__meta {
+  @apply mt-8 grid gap-3 text-sm text-ink-muted sm:grid-cols-2 lg:grid-cols-3;
+}
+
+.results-read__meta-card {
+  @apply rounded-2xl border border-sand-deep/80 bg-sand px-4 py-3;
+}
+
+.results-read__meta-dt {
+  @apply font-bold text-night;
+}
+
+.results-read__meta-dd {
+  @apply mt-1 leading-relaxed;
+}
+
+.results-read__notes {
+  @apply mt-5 rounded-2xl border border-sand-deep/80 bg-sand px-4 py-3.5;
+}
+
+.results-read__notes-title {
+  @apply font-sans text-xs font-bold uppercase tracking-[0.14em] text-flag;
+}
+
+.results-read__notes-list {
+  @apply mt-2 list-disc space-y-1.5 pl-5 text-base text-night;
+}
+
+.results-read__ai-error {
+  @apply mt-3 rounded-xl border border-amber-200/80 bg-amber-50 px-3 py-2.5 text-sm font-medium text-amber-950;
+}
+
+.results-read__source {
+  @apply mt-3 rounded-xl border border-flag/20 bg-flag-muted/50 px-3 py-2.5 text-sm text-night;
+}
+
+.results-read__source-prefix {
+  @apply font-bold text-flag;
+}
+
+.results-read__image-note {
+  @apply mt-3 text-sm text-ink-muted;
+}
+
+.results__scores {
+  @apply grid gap-5 lg:grid-cols-3;
+}
+
+.results-score-card {
+  @apply relative overflow-hidden rounded-3xl border border-sand-deep/80 bg-white p-6 shadow-card;
+}
+
+.results-score-card__bar {
+  @apply absolute left-0 top-0 h-full w-1 rounded-full bg-flag;
+}
+
+.results-score-card__label {
+  @apply pl-3 font-sans text-xs font-bold uppercase tracking-[0.14em] text-flag;
+}
+
+.results-score-card__value {
+  @apply mt-2 pl-3 font-display text-4xl font-normal tabular-nums text-night;
+}
+
+.results-score-card__body {
+  @apply mt-3 pl-3 text-sm leading-relaxed text-ink-muted;
+}
+
+.results-facts {
+  @apply overflow-hidden rounded-3xl border border-sand-deep/80 bg-white shadow-card;
+}
+
+.results-facts__head {
+  @apply border-b border-sand-deep/80 bg-sand px-6 py-6 sm:px-8;
+}
+
+.results-facts__title {
+  @apply font-display text-xl font-normal text-night sm:text-2xl;
+}
+
+.results-facts__sub {
+  @apply mt-2 text-sm text-ink-muted sm:text-base;
+}
+
+.results-facts__rows {
+  @apply px-6 py-2 sm:px-8;
+}
+
+.results-facts__inferred {
+  @apply border-t border-dashed border-flag/20 bg-flag-muted/25 px-6 py-5 sm:px-8;
+}
+
+.results-facts__inferred-title {
+  @apply font-sans text-xs font-bold uppercase tracking-[0.14em] text-flag;
+}
+
+.results-facts__inferred-sub {
+  @apply mt-1 text-sm text-ink-muted;
+}
+
+.results-facts__inferred-block {
+  @apply mt-3;
+}
+
+.results-fact-row {
+  @apply grid gap-2 border-b border-sand-deep/70 py-4 last:border-b-0 sm:grid-cols-[minmax(0,1fr)_minmax(7.5rem,10rem)] sm:items-start sm:gap-x-6 sm:gap-y-1 sm:py-5;
+}
+
+.results-fact-row__main {
+  @apply min-w-0 pr-2 sm:pr-4;
+}
+
+.results-fact-row__label {
+  @apply text-xs font-bold uppercase tracking-wide text-ink-subtle;
+}
+
+.results-fact-row__value {
+  @apply mt-1.5 break-words text-base font-semibold leading-snug text-night sm:mt-1;
+}
+
+.results-fact-row__conf {
+  @apply max-w-[11rem] text-xs font-semibold leading-snug text-flag sm:justify-self-end sm:text-right;
+}
+
+.results-concerns {
+  @apply rounded-3xl border border-sand-deep/80 bg-white p-6 shadow-card sm:p-8;
+}
+
+.results-concerns__title {
+  @apply font-display text-xl font-normal text-night sm:text-2xl;
+}
+
+.results-concerns__sub {
+  @apply mt-2 text-sm text-ink-muted sm:text-base;
+}
+
+.results-concerns__empty {
+  @apply mt-4 rounded-2xl border border-sand-deep bg-sand px-4 py-3 text-sm text-ink-muted;
+}
+
+.results-concerns__list {
+  @apply mt-5 space-y-3;
+}
+
+.results-concern {
+  @apply rounded-2xl border p-4 shadow-sm sm:p-5;
+}
+
+.results-concern--high {
+  @apply border-flag/25 bg-flag-muted/70 text-night;
+}
+
+.results-concern--medium {
+  @apply border-amber-200/90 bg-amber-50/95 text-amber-950;
+}
+
+.results-concern--low {
+  @apply border-sand-deep/80 bg-sand text-night;
+}
+
+.results-concern__badges {
+  @apply flex flex-wrap items-center gap-2;
+}
+
+.results-concern__title {
+  @apply font-bold text-night;
+}
+
+.results-concern__pill {
+  @apply rounded-full bg-white/95 px-2.5 py-0.5 text-xs font-bold text-flag;
+}
+
+.results-concern__pill-muted {
+  @apply rounded-full bg-white/90 px-2.5 py-0.5 text-xs font-semibold text-ink-muted;
+}
+
+.results-concern__explain {
+  @apply mt-2 text-sm leading-relaxed text-night/90 sm:text-base;
+}
+
+.results-concern__next {
+  @apply mt-3 text-sm font-bold text-night;
+}
+
+.results-concern__next-prefix {
+  @apply text-flag;
+}
+
+.results-missing {
+  @apply rounded-3xl border border-sand-deep/80 bg-white p-6 shadow-card sm:p-8;
+}
+
+.results-missing__title {
+  @apply font-display text-xl font-normal text-night sm:text-2xl;
+}
+
+.results-missing__sub {
+  @apply mt-2 text-sm text-ink-muted sm:text-base;
+}
+
+.results-missing__empty {
+  @apply mt-4 rounded-2xl border border-emerald-200/70 bg-emerald-50/70 px-4 py-3 text-sm text-emerald-950;
+}
+
+.results-missing__list {
+  @apply mt-5 grid gap-2 sm:grid-cols-2;
+}
+
+.results-missing__item {
+  @apply rounded-xl border border-sand-deep/80 bg-sand px-3 py-2.5 text-sm font-semibold text-night;
+}
+
+.results-questions {
+  @apply rounded-3xl border border-flag/20 bg-gradient-to-br from-white to-flag-muted/35 p-6 shadow-card sm:p-8;
+}
+
+.results-questions__title {
+  @apply font-display text-xl font-normal text-night sm:text-2xl;
+}
+
+.results-questions__sub {
+  @apply mt-2 text-sm text-ink-muted sm:text-base;
+}
+
+.results-questions__empty {
+  @apply mt-4 text-sm text-ink-muted sm:text-base;
+}
+
+.results-questions__list {
+  @apply mt-5 list-decimal space-y-3 pl-5 text-base font-medium text-night sm:text-lg;
+}
+
+.results-questions__item {
+  @apply leading-relaxed;
+}
+
+.results-ai-matches {
+  @apply rounded-3xl border border-flag/25 bg-gradient-to-br from-flag-muted/50 via-white to-sand p-6 shadow-card sm:p-8;
+}
+
+.results-ai-matches--muted {
+  @apply border-dashed border-sand-deep bg-sand;
+  background-image: none;
+}
+
+.results-ai-matches__header {
+  @apply max-w-3xl;
+}
+
+.results-ai-matches__badge {
+  @apply inline-flex rounded-full bg-flag px-3 py-1 font-sans text-xs font-bold uppercase tracking-wider text-white;
+}
+
+.results-ai-matches__title {
+  @apply font-display mt-4 text-2xl font-normal tracking-tight text-night sm:text-3xl;
+}
+
+.results-ai-matches__sub {
+  @apply mt-2 text-sm leading-relaxed text-ink-muted sm:text-base;
+}
+
+.results-ai-matches__intro {
+  @apply mt-6 max-w-3xl rounded-2xl border border-flag/15 bg-white/90 px-4 py-3 text-base leading-relaxed text-night;
+}
+
+.results-ai-matches__list {
+  @apply mt-6 grid gap-4 sm:gap-5 lg:grid-cols-3;
+}
+
+.results-ai-matches__card {
+  @apply flex flex-col rounded-2xl border border-sand-deep/80 bg-white p-5 shadow-sm;
+}
+
+.results-ai-matches__headline {
+  @apply font-display text-lg font-semibold leading-snug text-night;
+}
+
+.results-ai-matches__area {
+  @apply mt-2 text-xs font-bold uppercase tracking-wider text-flag;
+}
+
+.results-ai-matches__why {
+  @apply mt-3 flex-1 text-sm leading-relaxed text-ink-muted;
+}
+
+.results-ai-matches__tips {
+  @apply mt-4 space-y-1.5 border-t border-sand-deep/60 pt-3 text-sm font-medium text-night;
+}
+
+.results-ai-matches__tips li {
+  @apply relative pl-4 before:absolute before:left-0 before:top-2 before:h-1.5 before:w-1.5 before:rounded-full before:bg-flag;
+}
+
+.results-ai-matches__disclaimer {
+  @apply mt-6 text-xs leading-relaxed text-ink-subtle;
+}
+
+.results-ai-matches__placeholder-title {
+  @apply font-display text-lg font-semibold text-night;
+}
+
+.results-ai-matches__placeholder-body {
+  @apply mt-2 text-sm leading-relaxed text-ink-muted;
+}
+
+}

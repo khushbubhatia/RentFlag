@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="RentFlag">
+  <rect width="32" height="32" rx="7" fill="#fffbf7"/>
+  <path d="M11 5v22" stroke="#b83229" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M11 7h12l-3.8 5.8L19.5 16l-8.5-1V7z" fill="#d63d32"/>
+</svg>

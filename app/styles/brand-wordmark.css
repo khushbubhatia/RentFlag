@@ -1,0 +1,81 @@
+@layer components {
+  .brand-wordmark {
+    @apply flex items-start gap-3 sm:gap-3.5;
+  }
+
+  .brand-wordmark__icon {
+    @apply relative flex shrink-0 items-center justify-center rounded-2xl bg-flag shadow-flag ring-2 ring-white;
+  }
+
+  .brand-wordmark__icon--default {
+    @apply h-11 w-11;
+  }
+
+  .brand-wordmark__icon--hero {
+    @apply h-12 w-12 sm:h-14 sm:w-14;
+  }
+
+  .brand-wordmark__icon-shine {
+    @apply pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-white/25 to-transparent;
+  }
+
+  .brand-wordmark__svg {
+    @apply relative text-white;
+  }
+
+  .brand-wordmark__svg--default {
+    @apply h-6 w-6;
+  }
+
+  .brand-wordmark__svg--hero {
+    @apply h-8 w-8 sm:h-9 sm:w-9;
+  }
+
+  .brand-wordmark__text-col {
+    @apply min-w-0 leading-tight;
+  }
+
+  .brand-wordmark__title {
+    @apply font-display flex flex-wrap items-baseline gap-x-1.5 font-normal tracking-tight;
+  }
+
+  .brand-wordmark__title--default {
+    @apply text-xl sm:text-2xl;
+  }
+
+  .brand-wordmark__title--hero {
+    @apply text-3xl sm:text-[2.15rem];
+  }
+
+  .brand-wordmark__rent {
+    @apply text-night;
+  }
+
+  .brand-wordmark--hero .brand-wordmark__rent {
+    @apply underline decoration-flag/35 decoration-2 underline-offset-[0.18em];
+  }
+
+  .brand-wordmark__dot {
+    @apply hidden text-flag/40 sm:inline;
+  }
+
+  .brand-wordmark__flag {
+    @apply font-semibold text-flag;
+  }
+
+  .brand-wordmark__tagline-hero {
+    @apply mt-2 max-w-md text-sm font-medium text-ink-muted sm:text-base;
+  }
+
+  .brand-wordmark__tagline-compact {
+    @apply mt-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-muted sm:text-xs;
+  }
+
+  .brand-wordmark__svg-pole {
+    @apply opacity-100;
+  }
+
+  .brand-wordmark__svg-fill {
+    @apply drop-shadow-sm;
+  }
+}

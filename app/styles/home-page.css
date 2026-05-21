@@ -1,0 +1,133 @@
+@layer components {
+  .home-main {
+    @apply min-h-screen overflow-x-clip bg-transparent pb-20 outline-none sm:pb-24;
+  }
+
+  .home-stack {
+    @apply mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 sm:px-6 lg:px-10;
+  }
+
+  .home-stack--padded {
+    @apply py-6 sm:py-8;
+  }
+
+  .home-stack--results {
+    @apply max-w-5xl py-8;
+  }
+
+  .home-flow {
+    @apply overflow-hidden rounded-3xl border border-sand-deep/90 bg-white shadow-card;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 1) inset,
+      0 20px 50px -28px rgba(0, 0, 0, 0.1);
+  }
+
+  .home-flow .input-section__lead,
+  .home-flow .renter-profile__lead {
+    @apply border-0 bg-transparent p-0 shadow-none;
+  }
+
+  .home-flow .input-section__header-row {
+    @apply flex-col gap-6 sm:flex-row sm:items-end sm:justify-between;
+  }
+
+  .home-flow > * + * {
+    @apply border-t border-sand-deep/70;
+  }
+
+  .home-flow .pre-analysis {
+    @apply rounded-none border-0 shadow-none;
+    background: linear-gradient(90deg, rgba(253, 232, 230, 0.55) 0%, rgba(255, 255, 255, 0) 72%);
+  }
+
+  .home-flow .pre-analysis__inner {
+    @apply px-5 py-8 sm:px-8 sm:py-9;
+  }
+
+  .home-flow .input-section {
+    @apply rounded-none border-0 shadow-none ring-0 backdrop-blur-none;
+    background: transparent;
+  }
+
+  .home-flow .input-section__accent {
+    @apply hidden;
+  }
+
+  .home-flow .input-section__body {
+    @apply px-5 py-9 sm:px-8 sm:py-10;
+  }
+
+  .home-flow .input-section__tablist {
+    @apply mt-1;
+  }
+
+  .home-flow .input-section__tab-hint {
+    @apply mt-4;
+  }
+
+  .home-flow .input-section__fields {
+    @apply mt-8 space-y-6;
+  }
+
+  .home-flow .input-section__upload {
+    @apply py-8 sm:px-6;
+  }
+
+  .home-flow .renter-profile {
+    @apply rounded-none border-0 shadow-none ring-0 backdrop-blur-none;
+    background: linear-gradient(180deg, rgba(250, 250, 250, 0.85) 0%, rgba(255, 255, 255, 0) 70%);
+  }
+
+  .home-flow .renter-profile__accent {
+    @apply hidden;
+  }
+
+  .home-flow .renter-profile__body {
+    @apply px-5 py-9 sm:px-8 sm:py-10;
+  }
+
+  .home-flow .renter-profile__grid {
+    @apply mt-8 gap-5 sm:gap-6;
+  }
+
+  .home-flow .renter-profile__fieldset {
+    @apply mt-10 border-0 bg-transparent p-0;
+  }
+
+  .home-flow .renter-profile__chips {
+    @apply mt-4;
+  }
+
+  .home-flow .analysis-loading {
+    @apply rounded-none border-0 bg-transparent shadow-none ring-0;
+  }
+
+  .home-flow .analysis-loading__blob {
+    @apply opacity-50;
+  }
+
+  .home-flow .analysis-loading__top,
+  .home-flow .analysis-loading__list {
+    @apply px-5 pb-6 sm:px-8 sm:pb-7;
+  }
+
+  .home-flow .analysis-loading__top {
+    @apply gap-5 pt-6 sm:pt-8;
+  }
+
+  .home-flow .analysis-loading__list {
+    @apply mt-4 space-y-3 border-sand-deep/60 pt-6;
+  }
+
+  .home-form-error {
+    @apply rounded-2xl border border-amber-500/25 bg-amber-50 px-4 py-3.5 text-sm font-medium leading-relaxed text-amber-950;
+  }
+
+  .home-actions {
+    @apply flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center;
+  }
+
+  .home-submit {
+    @apply min-h-[52px] w-full rounded-full bg-flag px-10 py-3.5 text-base font-bold tracking-tight text-white shadow-flag transition hover:bg-flag-hover focus:outline-none focus-visible:ring-4 focus-visible:ring-flag/40 focus-visible:ring-offset-2 focus-visible:ring-offset-sand sm:min-h-[48px] sm:max-w-md sm:w-auto;
+  }
+}

@@ -1,0 +1,48 @@
+@layer components {
+.analysis-loading {
+  @apply relative overflow-hidden rounded-3xl border border-sand-deep/80 bg-white p-8 shadow-card sm:p-10;
+}
+
+.analysis-loading__blob {
+  @apply pointer-events-none absolute right-0 top-0 h-44 w-44 translate-x-1/3 -translate-y-1/3 rounded-full blur-3xl;
+  background: rgba(214, 61, 50, 0.12);
+}
+
+.analysis-loading__top {
+  @apply relative flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between;
+}
+
+.analysis-loading__title {
+  @apply font-display text-2xl font-normal text-night;
+}
+
+.analysis-loading__text {
+  @apply mt-3 max-w-xl text-base leading-relaxed text-ink-muted;
+}
+
+.analysis-loading__spinner {
+  @apply h-12 w-12 shrink-0 rounded-full border-2 border-flag-muted border-t-flag animate-spin;
+  box-shadow: 0 8px 24px -6px rgba(214, 61, 50, 0.22);
+}
+
+.analysis-loading__list {
+  @apply relative mt-8 space-y-4 border-t border-sand-deep/80 pt-8;
+}
+
+.analysis-loading__item {
+  @apply flex gap-4;
+}
+
+.analysis-loading__step-num {
+  @apply flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-flag-muted font-sans text-xs font-bold text-flag;
+}
+
+.analysis-loading__step-title {
+  @apply text-sm font-bold text-night;
+}
+
+.analysis-loading__step-detail {
+  @apply mt-1 text-sm leading-relaxed text-ink-muted;
+}
+
+}

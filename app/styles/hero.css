@@ -1,0 +1,30 @@
+@layer components {
+  /* Base hero (modifiers like .hero--site live in home-landing.css) */
+  .hero {
+    @apply bg-transparent;
+  }
+
+  .hero__brand-row {
+    @apply mb-6;
+  }
+
+  .hero__title {
+    @apply font-display mt-4 max-w-2xl text-balance text-[1.7rem] font-normal leading-[1.12] tracking-tight text-night sm:text-4xl lg:text-[2.45rem];
+  }
+
+  .hero__mark {
+    @apply relative inline-block whitespace-nowrap text-flag;
+  }
+
+  .hero__mark-text {
+    @apply relative z-10;
+  }
+
+  .hero__mark-bg {
+    @apply absolute inset-x-0 bottom-0 z-0 h-[0.5em] rounded-sm bg-flag-muted;
+  }
+
+  .hero__lede {
+    @apply mt-5 max-w-xl text-pretty text-base font-normal leading-relaxed text-ink-muted sm:text-[1.05rem] lg:max-w-2xl lg:text-lg;
+  }
+}

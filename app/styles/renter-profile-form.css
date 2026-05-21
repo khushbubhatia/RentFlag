@@ -1,0 +1,74 @@
+@layer components {
+.renter-profile {
+  @apply relative overflow-hidden rounded-3xl border border-sand-deep/80 bg-white p-6 shadow-card sm:p-9;
+}
+
+.renter-profile__accent {
+  @apply hidden;
+}
+
+.renter-profile__body {
+  @apply relative;
+}
+
+.renter-profile__lead {
+  @apply min-w-0 max-w-xl pb-2;
+}
+
+.renter-profile__step {
+  @apply font-sans text-[0.8125rem] font-bold uppercase tracking-[0.16em] text-flag;
+}
+
+.renter-profile__title {
+  @apply font-display mt-2 text-2xl font-normal tracking-tight text-night sm:text-3xl;
+}
+
+.renter-profile__blurb {
+  @apply mt-3 text-base leading-relaxed text-ink-muted sm:max-w-prose;
+}
+
+.renter-profile__grid {
+  @apply mt-6 grid gap-6 sm:grid-cols-2;
+}
+
+.renter-profile__label {
+  @apply block text-sm font-semibold text-night;
+}
+
+.renter-profile__label--full {
+  @apply sm:col-span-2;
+}
+
+.renter-profile__input {
+  @apply mt-2 w-full rounded-xl border border-sand-deep bg-sand px-4 py-3 text-night outline-none transition placeholder:text-ink-subtle focus:border-flag/50 focus:bg-white focus:ring-2 focus:ring-flag/15;
+}
+
+.renter-profile__input--narrow {
+  @apply sm:max-w-xs;
+}
+
+.renter-profile__fieldset {
+  @apply mt-8;
+}
+
+.renter-profile__legend {
+  @apply font-display text-xl font-normal tracking-tight text-night;
+}
+
+.renter-profile__chips {
+  @apply mt-4 flex flex-wrap gap-2;
+}
+
+.renter-profile__chip {
+  @apply inline-flex min-h-[44px] cursor-pointer items-center gap-2 rounded-full bg-sand-deep px-4 py-2.5 text-sm font-semibold text-ink-muted transition hover:bg-sand-deep/80 has-[:checked]:bg-flag has-[:checked]:text-white has-[:checked]:shadow-flag sm:min-h-0 sm:py-2;
+}
+
+.renter-profile__chip:has(:checked) {
+  box-shadow: 0 10px 28px -8px rgba(214, 61, 50, 0.35);
+}
+
+.renter-profile__chip-input {
+  @apply sr-only;
+}
+
+}

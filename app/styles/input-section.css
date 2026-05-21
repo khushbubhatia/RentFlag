@@ -1,0 +1,106 @@
+@layer components {
+.input-section {
+  @apply relative overflow-hidden rounded-3xl border border-sand-deep/80 bg-white p-6 shadow-card sm:p-9;
+}
+
+.input-section__accent {
+  @apply hidden;
+}
+
+.input-section__body {
+  @apply relative;
+}
+
+.input-section__lead {
+  @apply min-w-0 max-w-xl pb-2;
+}
+
+.input-section__header-row {
+  @apply flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between sm:gap-10;
+}
+
+.input-section__step {
+  @apply font-sans text-[0.8125rem] font-bold uppercase tracking-[0.16em] text-flag;
+}
+
+.input-section__title {
+  @apply font-display mt-2 text-2xl font-normal tracking-tight text-night sm:text-3xl;
+}
+
+.input-section__blurb {
+  @apply mt-3 text-base leading-relaxed text-ink-muted sm:max-w-prose;
+}
+
+.input-section__samples {
+  @apply flex shrink-0 flex-wrap gap-2 sm:justify-end;
+}
+
+.input-section__sample-btn {
+  @apply min-h-[44px] rounded-full border border-sand-deep bg-sand px-4 py-2.5 text-left text-sm font-semibold text-night transition hover:border-flag/35 hover:bg-flag-muted/40 disabled:opacity-50 sm:min-h-0 sm:text-right;
+}
+
+.input-section__tablist {
+  @apply mt-9 flex flex-wrap gap-2 rounded-full bg-sand-deep/80 p-1.5 sm:mt-10;
+}
+
+.input-section__tab {
+  @apply min-h-[44px] flex-1 rounded-full px-4 py-2.5 text-center text-sm font-semibold transition disabled:opacity-50 sm:flex-none sm:min-h-0 sm:px-5 sm:py-2 sm:text-left;
+}
+
+.input-section__tab--inactive {
+  @apply text-ink-muted hover:bg-white/60 hover:text-night;
+}
+
+.input-section__tab--active {
+  @apply bg-white text-night shadow-sm ring-2 ring-flag/30;
+}
+
+.input-section__tab-hint {
+  @apply mt-5 max-w-prose text-sm leading-relaxed text-ink-subtle sm:text-base;
+}
+
+.input-section__fields {
+  @apply mt-3 space-y-6;
+}
+
+.input-section__label {
+  @apply block text-sm font-semibold text-night;
+}
+
+.input-section__hint {
+  @apply mt-2 block text-sm font-normal leading-relaxed text-ink-subtle;
+}
+
+.input-section__input {
+  @apply mt-2 w-full rounded-xl border border-sand-deep bg-sand px-4 py-3 text-night outline-none transition placeholder:text-ink-subtle focus:border-flag/50 focus:bg-white focus:ring-2 focus:ring-flag/15;
+}
+
+.input-section__textarea {
+  @apply mt-2 w-full resize-y rounded-xl border border-sand-deep bg-sand px-4 py-3 text-base leading-relaxed text-night outline-none transition placeholder:text-ink-subtle focus:border-flag/50 focus:bg-white focus:ring-2 focus:ring-flag/15;
+}
+
+.input-section__upload {
+  @apply w-full min-h-[56px] rounded-2xl border-2 border-dashed border-flag/35 bg-flag-muted/40 px-6 py-9 text-center text-base font-semibold text-flag transition hover:border-flag/55 hover:bg-flag-muted/55 disabled:opacity-50 sm:min-h-0 sm:px-10 sm:py-10;
+}
+
+.input-section__help {
+  @apply text-sm text-ink-subtle;
+}
+
+.input-section__status {
+  @apply text-sm font-medium text-ink-muted;
+}
+
+.input-section__file-error {
+  @apply text-sm font-semibold text-flag;
+}
+
+.input-section__sr-file {
+  @apply hidden;
+}
+
+.input-section__stack {
+  @apply space-y-4;
+}
+
+}
