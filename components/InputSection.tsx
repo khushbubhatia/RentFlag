@@ -264,7 +264,7 @@ export function InputSection({ values, onChange, disabled }: InputSectionProps) 
                 onDragOver={onDropZoneDragOver}
                 onDragLeave={onDropZoneDragLeave}
                 onDrop={onDropZoneDrop}
-                className={`input-section__dropzone ${
+                className={`group input-section__dropzone ${
                   isDragOver ? "input-section__dropzone--active" : ""
                 } ${disabled ? "input-section__dropzone--disabled" : ""}`}
               >
