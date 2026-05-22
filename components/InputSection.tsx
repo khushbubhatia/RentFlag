@@ -36,7 +36,11 @@ type InputSectionProps = {
   disabled?: boolean;
 };
 
-function readFileAsBase64(file: File): Promise<string> {
+const MAX_SCREENSHOTS = 3;
+const MAX_IMAGE_BYTES = 8 * 1024 * 1024; // 8 MB per file
+
+/** Returns the full data URL ("data:image/png;base64,...") so we can use it directly as <img src>. */
+function readFileAsDataUrl(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => {
@@ -45,8 +49,7 @@ function readFileAsBase64(file: File): Promise<string> {
         reject(new Error("Could not read file"));
         return;
       }
-      const comma = result.indexOf(",");
-      resolve(comma >= 0 ? result.slice(comma + 1) : result);
+      resolve(result);
     };
     reader.onerror = () => reject(reader.error);
     reader.readAsDataURL(file);
@@ -56,6 +59,7 @@ function readFileAsBase64(file: File): Promise<string> {
 export function InputSection({ values, onChange, disabled }: InputSectionProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [fileError, setFileError] = useState<string | null>(null);
+  const [isDragOver, setIsDragOver] = useState(false);
 
   const setMode = (mode: AnalysisInputMode) => {
     onChange({ ...values, mode });
@@ -67,24 +71,77 @@ export function InputSection({ values, onChange, disabled }: InputSectionProps) 
     setFileError(null);
   };
 
-  const onFilesSelected = async (fileList: FileList | null) => {
-    if (!fileList?.length) return;
-    const files = Array.from(fileList).slice(0, 3);
-    if (files.length > 3) {
-      setFileError("Use at most three screenshots.");
+  const ingestFiles = async (incoming: File[]) => {
+    if (incoming.length === 0) return;
+
+    const onlyImages = incoming.filter((file) => file.type.startsWith("image/"));
+    if (onlyImages.length === 0) {
+      setFileError("Only image files can be uploaded.");
       return;
     }
+
+    const tooBig = onlyImages.find((file) => file.size > MAX_IMAGE_BYTES);
+    if (tooBig) {
+      setFileError(`"${tooBig.name}" is over 8 MB. Shrink it or pick a different shot.`);
+      return;
+    }
+
+    const slotsLeft = MAX_SCREENSHOTS - values.imagesBase64.length;
+    if (slotsLeft <= 0) {
+      setFileError(`You can keep at most ${MAX_SCREENSHOTS} screenshots—remove one first.`);
+      return;
+    }
+
+    const accepted = onlyImages.slice(0, slotsLeft);
+    const overflowed = onlyImages.length > slotsLeft;
+
     try {
-      const payloads = await Promise.all(files.map((file) => readFileAsBase64(file)));
+      const payloads = await Promise.all(accepted.map((file) => readFileAsDataUrl(file)));
       onChange({
         ...values,
         mode: "screenshots",
-        imagesBase64: payloads,
+        imagesBase64: [...values.imagesBase64, ...payloads],
       });
-      setFileError(null);
+      setFileError(
+        overflowed
+          ? `Kept the first ${accepted.length}—you can hold ${MAX_SCREENSHOTS} screenshots at a time.`
+          : null
+      );
     } catch {
       setFileError("Could not read one of the images.");
     }
+  };
+
+  const onFilesSelected = async (fileList: FileList | null) => {
+    if (!fileList?.length) return;
+    await ingestFiles(Array.from(fileList));
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const removeImageAt = (index: number) => {
+    const next = values.imagesBase64.filter((_, i) => i !== index);
+    onChange({ ...values, imagesBase64: next });
+    setFileError(null);
+  };
+
+  const onDropZoneDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    if (disabled) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "copy";
+    if (!isDragOver) setIsDragOver(true);
+  };
+
+  const onDropZoneDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    setIsDragOver(false);
+  };
+
+  const onDropZoneDrop = async (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    setIsDragOver(false);
+    if (disabled) return;
+    const files = Array.from(event.dataTransfer?.files ?? []);
+    await ingestFiles(files);
   };
 
   return (
@@ -189,23 +246,86 @@ export function InputSection({ values, onChange, disabled }: InputSectionProps) 
                 disabled={disabled}
                 onChange={(event) => onFilesSelected(event.target.files)}
               />
-              <button
-                type="button"
-                disabled={disabled}
-                onClick={() => fileInputRef.current?.click()}
-                className="input-section__upload"
+
+              <div
+                role="button"
+                tabIndex={disabled ? -1 : 0}
+                aria-disabled={disabled}
+                aria-label="Upload listing screenshots — click to browse or drag and drop"
+                onClick={() => !disabled && fileInputRef.current?.click()}
+                onKeyDown={(event) => {
+                  if (disabled) return;
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    fileInputRef.current?.click();
+                  }
+                }}
+                onDragEnter={onDropZoneDragOver}
+                onDragOver={onDropZoneDragOver}
+                onDragLeave={onDropZoneDragLeave}
+                onDrop={onDropZoneDrop}
+                className={`input-section__dropzone ${
+                  isDragOver ? "input-section__dropzone--active" : ""
+                } ${disabled ? "input-section__dropzone--disabled" : ""}`}
               >
-                Upload 1–3 screenshots
-              </button>
+                <div className="input-section__dropzone-inner">
+                  <svg
+                    aria-hidden
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    className="input-section__dropzone-icon"
+                  >
+                    <path d="M12 16V4m0 0-4 4m4-4 4 4" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M4 17v1a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-1" strokeLinecap="round" />
+                  </svg>
+                  <p className="input-section__dropzone-title">
+                    {isDragOver ? "Drop to add" : "Drag screenshots here, or click to browse"}
+                  </p>
+                  <p className="input-section__dropzone-sub">
+                    PNG / JPG · up to {MAX_SCREENSHOTS} files · 8 MB each
+                  </p>
+                  {values.imagesBase64.length > 0 && (
+                    <p className="input-section__dropzone-meta">
+                      {values.imagesBase64.length} of {MAX_SCREENSHOTS} added
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {values.imagesBase64.length > 0 && (
+                <ul className="input-section__thumbs" aria-label="Uploaded screenshots">
+                  {values.imagesBase64.map((src, index) => (
+                    <li
+                      key={`${index}-${src.slice(0, 40)}`}
+                      className="input-section__thumb"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={src}
+                        alt={`Screenshot ${index + 1}`}
+                        className="input-section__thumb-img"
+                      />
+                      <button
+                        type="button"
+                        disabled={disabled}
+                        onClick={() => removeImageAt(index)}
+                        className="input-section__thumb-remove"
+                        aria-label={`Remove screenshot ${index + 1}`}
+                      >
+                        ×
+                      </button>
+                      <span className="input-section__thumb-index">{index + 1}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
               <p className="input-section__help">
                 Files stay in your browser for this session. Adding any text you can read from the photos keeps
                 the report useful until OCR is wired in.
               </p>
-              {values.imagesBase64.length > 0 && (
-                <p className="input-section__status">
-                  {values.imagesBase64.length} image{values.imagesBase64.length === 1 ? "" : "s"} ready to send.
-                </p>
-              )}
               {fileError && <p className="input-section__file-error">{fileError}</p>}
               <label className="input-section__label">
                 Optional: paste visible text
