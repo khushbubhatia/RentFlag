@@ -1,10 +1,16 @@
 /**
  * Best-effort HTML → text for listing URLs. Many sites block bots, require JS, or rate-limit;
  * callers should always allow the user to paste text as a fallback.
+ *
+ * Order of attempts:
+ *   1. Firecrawl (if FIRECRAWL_API_KEY is set) — handles JS-rendered pages like Zillow.
+ *   2. Plain server-side fetch — works for simple HTML listings (Craigslist, small portals).
  */
 
 const MAX_HTML_BYTES = 512_000;
 const FETCH_TIMEOUT_MS = 12_000;
+const FIRECRAWL_TIMEOUT_MS = 30_000;
+const FIRECRAWL_ENDPOINT = "https://api.firecrawl.dev/v1/scrape";
 
 function stripHtmlToPlainText(html: string): string {
   let fragment = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, " ");
@@ -26,6 +32,50 @@ export type ListingUrlFetchResult = {
   note?: string;
 };
 
+async function fetchViaFirecrawl(url: string): Promise<ListingUrlFetchResult | null> {
+  const key = process.env.FIRECRAWL_API_KEY;
+  if (!key) return null;
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), FIRECRAWL_TIMEOUT_MS);
+
+  try {
+    const response = await fetch(FIRECRAWL_ENDPOINT, {
+      method: "POST",
+      signal: controller.signal,
+      headers: {
+        Authorization: `Bearer ${key}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        url,
+        formats: ["markdown"],
+        onlyMainContent: true,
+        timeout: FIRECRAWL_TIMEOUT_MS - 2_000,
+      }),
+    });
+    clearTimeout(timeout);
+
+    if (!response.ok) return null;
+
+    const data = (await response.json()) as {
+      success?: boolean;
+      data?: { markdown?: string };
+    };
+
+    const markdown = data?.data?.markdown?.trim() ?? "";
+    if (!data?.success || markdown.length < 120) return null;
+
+    return {
+      text: markdown.slice(0, 80_000),
+      note: "Loaded via Firecrawl (handles JS-heavy listing sites). If something looks off, paste the ad text yourself.",
+    };
+  } catch {
+    clearTimeout(timeout);
+    return null;
+  }
+}
+
 export async function fetchListingTextFromUrl(listingUrl: string): Promise<ListingUrlFetchResult> {
   let parsed: URL;
   try {
@@ -37,6 +87,9 @@ export async function fetchListingTextFromUrl(listingUrl: string): Promise<Listi
   if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
     return { text: "", note: "Only http(s) links are supported." };
   }
+
+  const viaFirecrawl = await fetchViaFirecrawl(parsed.toString());
+  if (viaFirecrawl) return viaFirecrawl;
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);

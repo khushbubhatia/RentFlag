@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnalysisLoadingState } from "@/components/AnalysisLoadingState";
 import { Hero } from "@/components/Hero";
 import { InputSection, type InputSectionValues } from "@/components/InputSection";
@@ -75,6 +75,14 @@ export default function HomePage() {
     setPreferences(defaultRenterPreferences);
     setFormError(null);
   };
+
+  /** When analysis finishes, jump to the top so the user doesn't have to scroll past the form. */
+  useEffect(() => {
+    if (!result) return;
+    if (typeof window === "undefined") return;
+    const prefersReduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: prefersReduce ? "auto" : "smooth" });
+  }, [result]);
 
   return (
     <main id="main-content" className="home-main" tabIndex={-1}>

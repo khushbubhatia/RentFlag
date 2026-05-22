@@ -102,6 +102,9 @@ export type AnalysisResult = {
     budgetFit: ScoreCaptionBlock;
     verificationLoad: ScoreCaptionBlock;
   };
+  /** True only when the user actually supplied budget or take-home income.
+   *  When false, the budget fit score is generic and should be hidden in the UI. */
+  budgetFitPersonalized: boolean;
   /** Model-generated soft interpretations — not treated as facts. */
   interpretiveNotes?: string[];
   aiUsed: boolean;

@@ -94,12 +94,17 @@ export async function analyzeListingPayload(args: {
   const templateQuestions = buildTemplateTourQuestions(missingInformation, listingMentionsNetEffective);
   const questionsToAsk = Array.from(new Set([...modelSuggestedQuestions, ...templateQuestions])).slice(0, 12);
 
+  const budgetFitPersonalized = Boolean(
+    args.preferences.maxMonthlyBudget || args.preferences.monthlyTakeHomeIncome
+  );
+
   const summaryLines = buildExecutiveSummaryLines(
     extracted,
     scores,
     overallRecommendation,
     listingConcerns.length,
-    modelEnrichmentRan
+    modelEnrichmentRan,
+    budgetFitPersonalized
   );
 
   const scoreCaptions = buildDashboardScoreCaptions(
@@ -128,5 +133,6 @@ export async function analyzeListingPayload(args: {
     listingSourceNote: args.listingSourceNote,
     alternativeMatchIdeas,
     alternativeMatchesIntro,
+    budgetFitPersonalized,
   };
 }

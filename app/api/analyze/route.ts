@@ -5,6 +5,8 @@ import type { AnalysisInputMode, RenterPreferences } from "@/lib/types";
 import { defaultRenterPreferences } from "@/lib/types";
 
 export const runtime = "nodejs";
+/** Allow up to 60s on Vercel (default 10s would time out Firecrawl + LLM on heavy listings). */
+export const maxDuration = 60;
 
 type AnalyzeRequestBody = {
   mode?: AnalysisInputMode;

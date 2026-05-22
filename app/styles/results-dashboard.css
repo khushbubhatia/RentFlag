@@ -95,6 +95,14 @@
   @apply text-[0.65rem] font-bold uppercase leading-tight tracking-wide text-ink-muted;
 }
 
+.results-score-pill--placeholder {
+  @apply border-dashed border-sand-deep bg-sand/40 min-w-[8rem];
+}
+
+.results-score-pill__value--muted {
+  @apply text-ink-muted/70;
+}
+
 .results-disclosure {
   @apply mt-5 rounded-2xl border border-sand-deep/70 bg-sand/50;
 }

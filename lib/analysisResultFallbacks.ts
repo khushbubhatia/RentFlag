@@ -67,6 +67,7 @@ export function withAnalysisResultDefaults(raw: unknown): AnalysisResult | null 
       typeof payload.alternativeMatchesIntro === "string"
         ? payload.alternativeMatchesIntro.trim().slice(0, 280) || undefined
         : undefined,
+    budgetFitPersonalized: Boolean(payload.budgetFitPersonalized),
   };
 }
 

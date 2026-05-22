@@ -227,7 +227,8 @@ export function buildExecutiveSummaryLines(
   scores: ListingScores,
   fitAssessment: OverallRecommendation,
   concernCount: number,
-  modelEnrichmentRan: boolean
+  modelEnrichmentRan: boolean,
+  budgetFitPersonalized: boolean = false
 ): string[] {
   const rent = extracted.monthlyRent.value;
   const lines: string[] = [];
@@ -238,9 +239,10 @@ export function buildExecutiveSummaryLines(
       : "Rent did not come through clearly in the text you shared; ask for gross monthly rent and what it includes."
   );
 
-  lines.push(
-    `Scores at a glance — disclosure completeness ${scores.transparencyScore}/100, budget fit ${scores.affordabilityScore}/100, verification load ${scores.riskScore}/100 (higher means more to confirm with the landlord).`
-  );
+  const scoreLine = budgetFitPersonalized
+    ? `Scores at a glance — disclosure completeness ${scores.transparencyScore}/100, budget fit ${scores.affordabilityScore}/100, verification load ${scores.riskScore}/100 (higher means more to confirm with the landlord).`
+    : `Scores at a glance — disclosure completeness ${scores.transparencyScore}/100, verification load ${scores.riskScore}/100 (higher means more to confirm with the landlord). Add a budget above to personalize the budget-fit score.`;
+  lines.push(scoreLine);
 
   if (concernCount > 0) {
     lines.push(

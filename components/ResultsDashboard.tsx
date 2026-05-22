@@ -20,7 +20,7 @@ function isPoorFitRead(result: AnalysisResult): boolean {
   return (
     result.overallRecommendation !== "good_fit" ||
     (result.redFlags ?? []).some((r) => r.severity === "high") ||
-    result.scores.affordabilityScore < 48
+    (result.budgetFitPersonalized && result.scores.affordabilityScore < 48)
   );
 }
 
@@ -106,6 +106,17 @@ function CompactScorePill({ value, label }: { value: number; label: string }) {
   );
 }
 
+function BudgetPlaceholderPill() {
+  return (
+    <div className="results-score-pill results-score-pill--placeholder" aria-label="Budget fit not personalized">
+      <span className="results-score-pill__value results-score-pill__value--muted" aria-hidden>
+        —
+      </span>
+      <span className="results-score-pill__label">Budget fit · add budget to see</span>
+    </div>
+  );
+}
+
 function buildPlainTextExport(result: AnalysisResult): string {
   const lines: string[] = [];
   lines.push("RentFlag — listing review");
@@ -115,7 +126,11 @@ function buildPlainTextExport(result: AnalysisResult): string {
   lines.push("");
   lines.push("Scores (0–100)");
   lines.push(`Disclosure completeness: ${result.scores.transparencyScore}`);
-  lines.push(`Budget fit: ${result.scores.affordabilityScore}`);
+  if (result.budgetFitPersonalized) {
+    lines.push(`Budget fit: ${result.scores.affordabilityScore}`);
+  } else {
+    lines.push(`Budget fit: not personalized (no budget or take-home entered)`);
+  }
   lines.push(`Verification load (higher → more follow-up): ${result.scores.riskScore}`);
   lines.push("");
   lines.push("Tour questions");
@@ -217,7 +232,11 @@ export function ResultsDashboard({
 
           <div className="results-glance__scores">
             <CompactScorePill value={result.scores.transparencyScore} label="Disclosure" />
-            <CompactScorePill value={result.scores.affordabilityScore} label="Budget fit" />
+            {result.budgetFitPersonalized ? (
+              <CompactScorePill value={result.scores.affordabilityScore} label="Budget fit" />
+            ) : (
+              <BudgetPlaceholderPill />
+            )}
             <CompactScorePill value={result.scores.riskScore} label="Verify load" />
           </div>
 
@@ -299,7 +318,11 @@ export function ResultsDashboard({
             </div>
             <div>
               <p className="results-score-caption-h">{result.scoreCaptions.budgetFit.heading}</p>
-              <p className="results-score-caption-b">{result.scoreCaptions.budgetFit.body}</p>
+              <p className="results-score-caption-b">
+                {result.budgetFitPersonalized
+                  ? result.scoreCaptions.budgetFit.body
+                  : "Hidden until you enter a max budget or take-home pay in your renter profile—without those, any number here would be a generic guess."}
+              </p>
             </div>
             <div>
               <p className="results-score-caption-h">{result.scoreCaptions.verificationLoad.heading}</p>
