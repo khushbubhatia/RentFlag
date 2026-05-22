@@ -77,5 +77,35 @@
 
   .brand-wordmark__svg-fill {
     @apply drop-shadow-sm;
+    transform-box: fill-box;
+    transform-origin: 0% 50%;
+    animation: brand-flag-wave 3.4s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  .brand-wordmark__icon:hover .brand-wordmark__svg-fill {
+    animation-duration: 1.6s;
+  }
+}
+
+@keyframes brand-flag-wave {
+  0%,
+  100% {
+    transform: skewY(0deg) translateY(0);
+  }
+  25% {
+    transform: skewY(-3.5deg) translateY(-0.4px);
+  }
+  50% {
+    transform: skewY(0.5deg) translateY(0);
+  }
+  75% {
+    transform: skewY(3.5deg) translateY(0.4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-wordmark__svg-fill {
+    animation: none;
   }
 }
